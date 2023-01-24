@@ -1,0 +1,45 @@
+{
+  "name": "meal-planner-api",
+  "version": "0.0.0",
+  "description": "Express, Prisma, and PostgreSQL backend for meal planner app",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/app.js",
+    "watch": "nodemon src/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Anclagen/Meal-Planner-API.git"
+  },
+  "keywords": [
+    "Express",
+    "Prisma",
+    "PostgreSQL",
+    "Meal",
+    "planner"
+  ],
+  "author": "Alexander Barrett",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Anclagen/Meal-Planner-API/issues"
+  },
+  "homepage": "https://github.com/Anclagen/Meal-Planner-API#readme",
+  "devDependencies": {
+    "dotenv": "^16.0.3",
+    "nodemon": "^2.0.20",
+    "prisma": "^4.9.0"
+  },
+  "dependencies": {
+    "@prisma/client": "^4.9.0",
+    "axios": "^1.2.3",
+    "bcrypt": "^5.1.0",
+    "body-parser": "^1.20.1",
+    "express": "^4.18.2",
+    "express-validator": "^6.14.3",
+    "jsonwebtoken": "^9.0.0",
+    "nodemailer": "^6.9.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^4.6.0"
+  }
+}

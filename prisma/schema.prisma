@@ -1,0 +1,127 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String     @id @default(uuid())
+  email     String     @unique
+  name      String
+  password  String
+  about     String?
+  avatar    String?
+  banner    String?
+  role      Role       @default(user)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  recipes   Recipe[]
+  mealPlans MealPlan[]
+  dayPlans  DayPlan[]
+}
+
+enum Role {
+  user
+  Admin
+}
+
+model Recipe {
+  id           String             @id @default(uuid())
+  dish         String
+  description  String?
+  instructions String
+  preTime      String
+  cookingTime  String?
+  ingredients  RecipeIngredient[]
+  cuisine      cuisine?           @relation(fields: [cuisineId], references: [id])
+  cuisineId    Int?
+  avatar       String?
+  banner       String?
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt
+  user         User               @relation(fields: [userId], references: [id])
+  userId       String
+  authorCredit String?
+  breakfast    DayPlan[]          @relation("breakfast")
+  lunch        DayPlan[]          @relation("lunch")
+  dinner       DayPlan[]          @relation("dinner")
+}
+
+model cuisine {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  recipes   Recipe[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+}
+
+model RecipeIngredient {
+  id           String     @id @default(uuid())
+  recipe       Recipe     @relation(fields: [recipeId], references: [id])
+  recipeId     String
+  ingredient   Ingredient @relation(fields: [ingredientId], references: [id])
+  ingredientId String
+  amount       Int
+  measurement  String
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+}
+
+model Ingredient {
+  id               String             @id @default(uuid())
+  name             String
+  description      String?
+  image            String?
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  RecipeIngredient RecipeIngredient[]
+}
+
+model DayPlan {
+  id           String     @id @default(uuid())
+  breakfast    Recipe     @relation("breakfast", fields: [breakfastId], references: [id])
+  breakfastId  String
+  lunch        Recipe     @relation("lunch", fields: [lunchId], references: [id])
+  lunchId      String
+  dinner       Recipe     @relation("dinner", fields: [dinnerId], references: [id])
+  dinnerId     String
+  description  String?
+  instructions String
+  avatar       String?
+  banner       String?
+  User         User?      @relation(fields: [userId], references: [id])
+  userId       String?
+  monday       MealPlan[] @relation("monday")
+  tuesday      MealPlan[] @relation("tuesday")
+  wednesday    MealPlan[] @relation("wednesday")
+  thursday     MealPlan[] @relation("thursday")
+  friday       MealPlan[] @relation("friday")
+  saturday     MealPlan[] @relation("saturday")
+  sunday       MealPlan[] @relation("sunday")
+}
+
+model MealPlan {
+  id          String   @id @default(uuid())
+  User        User     @relation(fields: [userId], references: [id])
+  userId      String
+  monday      DayPlan? @relation("monday", fields: [mondayId], references: [id])
+  mondayId    String?
+  tuesday     DayPlan? @relation("tuesday", fields: [tuesdayId], references: [id])
+  tuesdayId   String?
+  wednesday   DayPlan? @relation("wednesday", fields: [wednesdayId], references: [id])
+  wednesdayId String?
+  thursday    DayPlan? @relation("thursday", fields: [thursdayId], references: [id])
+  thursdayId  String?
+  friday      DayPlan? @relation("friday", fields: [fridayId], references: [id])
+  fridayId    String?
+  saturday    DayPlan? @relation("saturday", fields: [saturdayId], references: [id])
+  saturdayId  String?
+  sunday      DayPlan? @relation("sunday", fields: [sundayId], references: [id])
+  sundayId    String?
+}

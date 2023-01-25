@@ -21,6 +21,7 @@ model User {
   role      Role       @default(user)
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
+  verified  Boolean    @default(false)
   recipes   Recipe[]
   mealPlans MealPlan[]
   dayPlans  DayPlan[]
@@ -28,7 +29,7 @@ model User {
 
 enum Role {
   user
-  Admin
+  admin
 }
 
 model Recipe {

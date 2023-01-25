@@ -4,6 +4,7 @@ import * as dotenv from "dotenv";
 import bodyParser from "body-parser";
 import swaggerUI from "swagger-ui-express";
 import swaggerJsDoc from "swagger-jsdoc";
+import { recipeRouter } from "./modules/recipe/routes.js";
 
 dotenv.config();
 
@@ -54,6 +55,7 @@ const jsonErrorHandler = function (error, req, res, next) {
 app.use(jsonErrorHandler);
 
 app.use("/users", usersRouter);
+app.use("/recipes", recipeRouter);
 
 const server = app.listen(PORT, () => console.log(`🚀 Server ready at: http://localhost:${PORT}`));
 
